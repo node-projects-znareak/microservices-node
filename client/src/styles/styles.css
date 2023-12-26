@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: "Inter";
+}
+
+html,
+body,
+#root,
+#root > div,
+#root > div > div {
+  width: 100%;
+  min-height: 100dvh;
+}
+
+button {
+  outline: none !important;
+}
+
+.post-image-modal-container > div {
+  overflow-y: auto;
+  max-height: 500px;
+}
