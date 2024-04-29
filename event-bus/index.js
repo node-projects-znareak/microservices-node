@@ -19,9 +19,9 @@ app.post("/events", async (req, res) => {
   const event = req.body;
   try {
     const result = await Promise.all([
-      axios.post("http://localhost:3000/events", event), //posts event
-      axios.post("http://localhost:3001/events", event), // comments evet
-      axios.post("http://localhost:3003/events", event), // query event
+      axios.post("http://localhost:3000/events", event), //posts service
+      axios.post("http://localhost:3001/events", event), // comments service
+      // axios.post("http://localhost:3003/events", event), // query service
     ]);
     res.json({ status: "OK" }).status(200);
   } catch (error) {

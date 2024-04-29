@@ -26,6 +26,7 @@ const PostCreate = ({ setPosts }) => {
       });
       toast.success("Successfully upload!");
       setCoverImage([]);
+      console.log({ post });
       setPosts((posts) => [post.data, ...posts]);
     } catch (error) {
       console.error(error);

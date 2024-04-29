@@ -20,6 +20,5 @@ button {
 }
 
 .post-image-modal-container > div {
-  overflow-y: auto;
   max-height: 500px;
 }

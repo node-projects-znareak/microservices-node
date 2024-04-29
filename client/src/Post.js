@@ -16,15 +16,11 @@ export default function Post({ post }) {
           width="100%"
           alt={post.title}
           src={post.cover_image}
+          style={{ aspectRatio: 1 / 1, objectFit: "cover", objectPosition: "center" }}
         />
       </article>
 
-      <PostModal
-        isOpen={isOpen}
-        toggleOpen={toggleOpen}
-        post={post}
-        comments={comments}
-      />
+      <PostModal isOpen={isOpen} toggleOpen={toggleOpen} post={post} comments={comments} />
     </>
   );
 }
