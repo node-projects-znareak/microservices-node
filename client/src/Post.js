@@ -1,10 +1,8 @@
 import { Image } from "@nextui-org/react";
 import { useToggle } from "usehooks-ts";
-import { useState } from "react";
 import PostModal from "./PostModal";
 
 export default function Post({ post }) {
-  const [comments, setComments] = useState([]);
   const [isOpen, toggleOpen] = useToggle();
 
   return (
@@ -20,7 +18,7 @@ export default function Post({ post }) {
         />
       </article>
 
-      <PostModal isOpen={isOpen} toggleOpen={toggleOpen} post={post} comments={comments} />
+      <PostModal isOpen={isOpen} toggleOpen={toggleOpen} post={post} />
     </>
   );
 }

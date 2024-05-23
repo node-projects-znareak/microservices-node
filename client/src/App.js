@@ -8,7 +8,7 @@ const App = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/posts").then((res) => {
+    axios.get("http://localhost:3003/posts").then((res) => {
       setPosts(Object.values(res.data).reverse());
     });
   }, []);

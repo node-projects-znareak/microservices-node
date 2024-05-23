@@ -21,7 +21,7 @@ app.post("/events", async (req, res) => {
     const result = await Promise.all([
       axios.post("http://localhost:3000/events", event), //posts service
       axios.post("http://localhost:3001/events", event), // comments service
-      // axios.post("http://localhost:3003/events", event), // query service
+      axios.post("http://localhost:3003/events", event), // query service
     ]);
     res.json({ status: "OK" }).status(200);
   } catch (error) {
@@ -31,5 +31,5 @@ app.post("/events", async (req, res) => {
 });
 
 app.listen(4000, () => {
-  console.log("Listening on port 4000");
+  console.log("Event bus service listening on port 4000");
 });

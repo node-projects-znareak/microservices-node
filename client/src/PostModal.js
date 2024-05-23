@@ -1,27 +1,11 @@
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  Image,
-} from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, Image } from "@nextui-org/react";
 import CommentCreate from "./CommentCreate";
 import CommentsList from "./CommentsList";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
 
 export default function PostModal({ isOpen, toggleOpen, post }) {
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState(post.comments ?? []);
 
-  useEffect(() => {
-    if (isOpen) {
-      axios
-        .get(`http://localhost:3001/posts/${post.id}/comments`)
-        .then((res) => {
-          setComments(res.data);
-        });
-    }
-  }, [post.id, isOpen]);
   return (
     <Modal
       size="3xl"
@@ -44,10 +28,7 @@ export default function PostModal({ isOpen, toggleOpen, post }) {
           </div>
         </ModalBody>
 
-        <div
-          className="px-4 mb-3 mt-3"
-          style={{ height: "300px", overflowY: "auto" }}
-        >
+        <div className="px-4 mb-3 mt-3" style={{ height: "300px", overflowY: "auto" }}>
           <h2 className="text-1xl font-extrabold mb-3">Comments</h2>
           <CommentCreate postId={post.id} setComments={setComments} />
           <CommentsList comments={comments} />

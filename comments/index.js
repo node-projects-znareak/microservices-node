@@ -10,10 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 app.get("/posts/:id/comments", (req, res) => {
@@ -35,9 +32,9 @@ app.post("/posts/:id/comments", async (req, res) => {
 
   await axios.post("http://localhost:4000/events", {
     type: "CommentCreated",
-    data: comment,
-  })
-  
+    data: { ...comment, postId },
+  });
+
   res.json(comment).status(201);
 });
 
@@ -47,5 +44,5 @@ app.post("/events", (req, res) => {
 });
 
 app.listen(3001, () => {
-  console.log("Listening on port 3001");
+  console.log("Comments service listening on port 3001");
 });

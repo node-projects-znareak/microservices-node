@@ -24,9 +24,8 @@ const PostCreate = ({ setPosts }) => {
         title,
         cover_image,
       });
-      toast.success("Successfully upload!");
+      toast.success("Post created!");
       setCoverImage([]);
-      console.log({ post });
       setPosts((posts) => [post.data, ...posts]);
     } catch (error) {
       console.error(error);
@@ -46,9 +45,11 @@ const PostCreate = ({ setPosts }) => {
           placeholder="Enter title"
           name="title"
           disabled={isLoading}
+          required
           autoFocus
         />
         <FilePond
+          onaddfile={() => toast.success("Upload image successfully")}
           acceptedFileTypes={["image/*"]}
           checkValidity={true}
           files={coverImage}
@@ -60,13 +61,7 @@ const PostCreate = ({ setPosts }) => {
           labelIdle='Drag & Drop your image or <span class="filepond--label-action">Browse</span>'
           credits={false}
         />
-        <Button
-          color="primary"
-          className="mt-2"
-          type="submit"
-          isLoading={isLoading}
-          fullWidth
-        >
+        <Button color="primary" className="mt-2" type="submit" isLoading={isLoading} fullWidth>
           Create
         </Button>
       </form>

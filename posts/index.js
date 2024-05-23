@@ -26,6 +26,7 @@ app.post("/posts", async (req, res) => {
     id,
     title,
     cover_image,
+    comments: [],
   };
   addPost(post);
 
@@ -43,5 +44,5 @@ app.post("/events", (req, res) => {
 });
 
 app.listen(3000, () => {
-  console.log("Listening on port 3000");
+  console.log("Posts service listening on port 3000");
 });
