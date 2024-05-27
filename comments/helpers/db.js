@@ -7,6 +7,10 @@ const readComments = () => {
   return JSON.parse(commentsJson) || [];
 };
 
+const writeComments = (comments) => {
+  fs.writeFileSync(commentsPath, JSON.stringify(comments, null, 2));
+};
+
 const readCommentsByPostId = (postId) => {
   const comments = readComments();
   return comments[postId] || [];
@@ -34,4 +38,5 @@ module.exports = {
   readCommentsByPostId,
   addComment,
   readComments,
+  writeComments,
 };

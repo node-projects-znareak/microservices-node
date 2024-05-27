@@ -7,6 +7,15 @@ const readPosts = () => {
   return JSON.parse(postsJson);
 };
 
+const readPostById = (id) => {
+  const posts = readPosts();
+  return posts[id];
+};
+
+const writePosts = (posts) => {
+  fs.writeFileSync(postsPath, JSON.stringify(posts, null, 2));
+};
+
 const addPost = (post) => {
   const posts = readPosts();
   posts[post.id] = {
@@ -28,5 +37,7 @@ const addCommentPost = (postId, comment) => {
 module.exports = {
   addCommentPost,
   readPosts,
+  readPostById,
   addPost,
+  writePosts,
 };

@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
-const { addPost, addCommentPost, readPosts } = require("./helpers/db");
+const { addPost, addCommentPost, readPosts, readPostById, writePosts } = require("./helpers/db");
 
 app.use(morgan("dev"));
 app.use(express.json());
@@ -20,11 +20,26 @@ app.get("/posts", (req, res) => {
 app.post("/events", (req, res) => {
   const { type, data } = req.body;
   let result = null;
+
   if (type === "PostCreated") {
     result = addPost(data);
   } else if (type === "CommentCreated") {
-    const { id, content, postId } = data;
-    result = addCommentPost(postId, { id, content });
+    const { id, content, postId, status } = data;
+    result = addCommentPost(postId, { id, content, status });
+  } else if (type === "CommentUpdated") {
+    const { id, content, status, postId } = data;
+    const post = readPostById(postId);
+
+    const comment = post.comments.find((c) => c.id === id);
+    comment.content = content;
+    comment.status = status;
+    result = comment;
+
+    const allPosts = readPosts();
+    writePosts({
+      ...allPosts,
+      [postId]: post,
+    });
   }
 
   console.log(result);

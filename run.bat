@@ -15,3 +15,4 @@ start cmd /k "cd comments && %command% && exit"
 start cmd /k "cd event-bus && %command% && exit
 start cmd /k "cd posts && %command% && exit
 start cmd /k "cd query && %command% && exit
+start cmd /k "cd moderation && %command% && exit"

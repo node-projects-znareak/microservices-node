@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const { randomBytes } = require("crypto");
-const { addComment, readCommentsByPostId } = require("./helpers/db");
+const { addComment, readCommentsByPostId, readComments, writeComments } = require("./helpers/db");
 const axios = require("axios").default;
 
 app.use(express.json());
@@ -27,6 +27,7 @@ app.post("/posts/:id/comments", async (req, res) => {
   const comment = {
     id: commentId,
     content,
+    status: "pending",
   };
   addComment(postId, comment);
 
@@ -38,8 +39,29 @@ app.post("/posts/:id/comments", async (req, res) => {
   res.json(comment).status(201);
 });
 
-app.post("/events", (req, res) => {
+app.post("/events", async (req, res) => {
   console.log("Received Event:", req.body.type);
+
+  const { type, data } = req.body;
+
+  if (type === "CommentModerated") {
+    const { content, status, ...comment } = data;
+    const postId = comment.postId;
+    const commentsByPost = readCommentsByPostId(postId);
+    const commentModerated = commentsByPost.find((c) => c.id === comment.id);
+    commentModerated.status = status;
+
+    const comments = readComments();
+    writeComments({
+      ...comments,
+      [postId]: commentsByPost,
+    });
+
+    await axios.post("http://localhost:4000/events", {
+      type: "CommentUpdated",
+      data: { ...comment, content, status },
+    });
+  }
   res.json({ status: "OK" }).status(200);
 });
 

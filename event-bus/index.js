@@ -22,6 +22,7 @@ app.post("/events", async (req, res) => {
       axios.post("http://localhost:3000/events", event), //posts service
       axios.post("http://localhost:3001/events", event), // comments service
       axios.post("http://localhost:3003/events", event), // query service
+      axios.post("http://localhost:3004/events", event), // moderation service
     ]);
     res.json({ status: "OK" }).status(200);
   } catch (error) {
