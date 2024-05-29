@@ -23,6 +23,11 @@
         "id": "b09c5d2f",
         "content": "Te quedo genial!",
         "status": "approved"
+      },
+      {
+        "id": "86172014",
+        "content": "orangeeee",
+        "status": "rejected"
       }
     ]
   },
@@ -220,5 +225,11 @@
         "content": ""
       }
     ]
+  },
+  "6acb2c72": {
+    "id": "6acb2c72",
+    "title": "",
+    "cover_image": "https://i.ibb.co/dKvwRM7/rsbfxmw8k2tb1.jpg",
+    "comments": []
   }
 }
