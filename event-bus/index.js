@@ -3,6 +3,8 @@ const app = express();
 const axios = require("axios").default;
 const morgan = require("morgan");
 
+const events = []
+
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -17,6 +19,8 @@ app.use(function (req, res, next) {
 
 app.post("/events", async (req, res) => {
   const event = req.body;
+  events.push(event)
+
   try {
     const result = await Promise.all([
       axios.post("http://localhost:3000/events", event), //posts service
@@ -29,6 +33,10 @@ app.post("/events", async (req, res) => {
     console.log(error);
     res.status(500).json({ status: "error", message: error.message });
   }
+});
+
+app.get("/events", (req, res) => {
+  res.json(events).status(200);
 });
 
 app.listen(4000, () => {

@@ -13,6 +13,7 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
 app.get("/posts/:id/comments", (req, res) => {
   const commentId = req.params.id;
   const comments = readCommentsByPostId(commentId);
@@ -31,7 +32,7 @@ app.post("/posts/:id/comments", async (req, res) => {
   };
   addComment(postId, comment);
 
-  await axios.post("http://localhost:4000/events", {
+  await axios.post("http://localhost:4000/events", {//event bus
     type: "CommentCreated",
     data: { ...comment, postId },
   });
@@ -57,7 +58,7 @@ app.post("/events", async (req, res) => {
       [postId]: commentsByPost,
     });
 
-    await axios.post("http://localhost:4000/events", {
+    await axios.post("http://localhost:4000/events", {// event bus
       type: "CommentUpdated",
       data: { ...comment, content, status },
     });
